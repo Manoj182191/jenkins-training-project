@@ -6,9 +6,24 @@ pipeline {
     }
 
     stages {
-        stage('Test') {
+
+        stage('Checkout') {
             steps {
-                sh 'echo Scanner Installed'
+                git branch: 'main',
+                    url: 'https://github.com/Manoj182191/jenkins-training-project.git'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarServer') {
+                    sh '''
+                    ${SONAR_RUNNER_HOME}/bin/sonar-scanner \
+                    -Dsonar.projectKey=devops-training-app \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://13.126.187.64:9000
+                    '''
+                }
             }
         }
     }
