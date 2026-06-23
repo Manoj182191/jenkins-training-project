@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        sonarRunner 'SonarScanner'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -18,7 +14,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarServer') {
                     sh '''
-                    $SONAR_RUNNER_HOME/bin/sonar-scanner \
+                    /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/bin/sonar-scanner \
                     -Dsonar.projectKey=devops-training-app \
                     -Dsonar.sources=. \
                     -Dsonar.host.url=http://13.126.187.64:9000
