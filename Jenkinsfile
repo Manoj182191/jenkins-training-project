@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/Manoj182191/jenkins-training-project.git'
+                    url: 'https://github.com/Manoj182191/jenkins-training-project.git'
             }
         }
 
