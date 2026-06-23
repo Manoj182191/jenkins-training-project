@@ -1,11 +1,15 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "manoj8074/jenkins-training-project"
+    tools {
+        sonarRunner 'SonarScanner'
     }
 
     stages {
-        ...
+        stage('Test') {
+            steps {
+                sh 'echo Scanner Installed'
+            }
+        }
     }
 }
