@@ -3,23 +3,29 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Create Artifact') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Manoj182191/jenkins-training-project.git'
+                sh 'echo "DevOps Training Day 46" > sample-artifact.txt'
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Upload Artifact to Nexus') {
             steps {
-                withSonarQubeEnv('SonarServer') {
-                    sh '''
-                    /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/bin/sonar-scanner \
-                    -Dsonar.projectKey=devops-training-app \
-                    -Dsonar.sources=. \
-                    -Dsonar.host.url=http://13.126.187.64:9000
-                    '''
-                }
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '13.201.33.84:8081',
+                    groupId: 'com.devops.training',
+                    version: '1.0',
+                    repository: 'maven-releases',
+                    credentialsId: 'nexus-credentials',
+                    artifacts: [[
+                        artifactId: 'sample-app',
+                        classifier: '',
+                        file: 'sample-artifact.txt',
+                        type: 'txt'
+                    ]]
+                )
             }
         }
     }
