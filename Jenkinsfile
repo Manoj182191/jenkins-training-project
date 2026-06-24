@@ -16,7 +16,7 @@ pipeline {
                     protocol: 'http',
                     nexusUrl: '13.201.33.84:8081',
                     groupId: 'com.devops.training',
-                    version: '1.0',
+                    version: '2.0',
                     repository: 'maven-releases',
                     credentialsId: 'nexus-credentials',
                     artifacts: [[
