@@ -9,6 +9,20 @@ pipeline {
             }
         }
 
+        stage('Security Scan - Trivy') {
+            steps {
+                sh '''
+                sudo docker run --rm \
+                -v /var/run/docker.sock:/var/run/docker.sock \
+                -v $HOME/.cache/trivy:/root/.cache \
+                aquasec/trivy:0.71.2 image \
+                --severity HIGH,CRITICAL \
+                --exit-code 1 \
+                devops-training-app:v1
+                '''
+            }
+        }
+
         stage('Upload Artifact to Nexus') {
             steps {
                 nexusArtifactUploader(
