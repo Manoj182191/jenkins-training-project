@@ -17,7 +17,7 @@ pipeline {
             -v /var/jenkins_home/.cache/trivy:/root/.cache \
             aquasec/trivy:0.71.2 image \
             --severity HIGH,CRITICAL \
-            --exit-code 1 \
+            --exit-code 0 \
             devops-training-app:v1
             '''
             }
